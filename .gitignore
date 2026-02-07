@@ -1,0 +1,32 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+venv/
+.env
+backend/.env
+
+# Node / Frontend
+node_modules/
+frontend/node_modules/
+frontend/dist/
+frontend/build/
+frontend/.env
+
+# Logs
+*.log
+app.log
+
+# Database
+*.db
+*.sqlite3
+shuttlecoach.db
+
+# Uploads (User data)
+uploads/
+backend/uploads/
+
+# OS / Editor
+.DS_Store
+.vscode/
+.idea/

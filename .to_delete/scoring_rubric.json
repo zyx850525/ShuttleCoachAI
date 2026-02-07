@@ -1,0 +1,205 @@
+{
+  "actions": {
+    "smash": {
+      "total_score": 100,
+      "scoring_rules": {
+        "swing_complete": {
+          "weight": 0.30,
+          "metric": "shoulder_angle_range",
+          "thresholds": [
+            { "min": 110, "score": 30 },
+            { "min": 90, "max": 110, "score": 24 },
+            { "min": 70, "max": 90, "score": 18 },
+            { "max": 70, "score": 10 }
+          ],
+          "issue_tag": "swing_too_small"
+        },
+        "contact_point_height": {
+          "weight": 0.25,
+          "metric": "contact_ratio",
+          "thresholds": [
+            { "min": 0.92, "score": 25 },
+            { "min": 0.88, "max": 0.92, "score": 20 },
+            { "min": 0.82, "max": 0.88, "score": 14 },
+            { "max": 0.82, "score": 8 }
+          ],
+          "issue_tag": "contact_point_low"
+        },
+        "body_rotation": {
+          "weight": 0.20,
+          "metric": "rotation_angle",
+          "thresholds": [
+            { "min": 45, "score": 20 },
+            { "min": 35, "max": 45, "score": 16 },
+            { "min": 25, "max": 35, "score": 12 },
+            { "max": 25, "score": 6 }
+          ],
+          "issue_tag": "insufficient_rotation"
+        },
+        "timing": {
+          "weight": 0.15,
+          "metric": "duration",
+          "thresholds": [
+            { "min": 0.35, "max": 0.55, "score": 15 },
+            { "min": 0.25, "max": 0.35, "score": 11 },
+            { "min": 0.55, "max": 0.65, "score": 11 },
+            { "max": 0.25, "score": 6 },
+            { "min": 0.65, "score": 6 }
+          ],
+          "issue_tag": "timing_off"
+        },
+        "stability": {
+          "weight": 0.10,
+          "metric": "stability_index",
+          "thresholds": [
+            { "max": 6, "score": 10 },
+            { "min": 6, "max": 10, "score": 7 },
+            { "min": 10, "score": 4 }
+          ],
+          "issue_tag": "unstable_smash"
+        }
+      },
+      "suggestions": {
+        "swing_too_small": "Your swing amplitude is too small, relying mostly on your arm. Focus on generating a full swing and using your body rotation to increase power.",
+        "contact_point_low": "Your contact point is too low. Try adjusting your stance to ensure you're hitting the shuttle at a higher point, ideally above your head.",
+        "insufficient_rotation": "Your body rotation is insufficient. Make sure to rotate your torso and hips to generate more power and stability.",
+        "timing_off": "Your timing is off. Work on synchronizing your preparation and execution for a smoother shot.",
+        "unstable_smash": "Your smash is unstable. Focus on consistency by practicing your swing mechanics and reducing variability in your movements."
+      }
+    },
+    "clear": {
+      "total_score": 100,
+      "scoring_rules": {
+        "contact_point_height": {
+          "weight": 0.35,
+          "metric": "contact_ratio",
+          "thresholds": [
+            { "min": 0.93, "score": 35 },
+            { "min": 0.89, "max": 0.93, "score": 24 },
+            { "min": 0.83, "max": 0.89, "score": 18 },
+            { "max": 0.83, "score": 8 }
+          ],
+          "issue_tag": "contact_point_low_clear"
+        },
+        "swing_complete": {
+          "weight": 0.25,
+          "metric": "shoulder_angle_range",
+          "thresholds": [
+            { "min": 100, "score": 25 },
+            { "min": 80, "max": 100, "score": 20 },
+            { "min": 60, "max": 80, "score": 15 },
+            { "max": 60, "score": 8 }
+          ],
+          "issue_tag": "incomplete_swing_clear"
+        },
+        "body_coordination": {
+          "weight": 0.20,
+          "metric": "rotation_angle",
+          "thresholds": [
+            { "min": 45, "score": 20 },
+            { "min": 35, "max": 45, "score": 16 },
+            { "min": 25, "max": 35, "score": 12 },
+            { "max": 25, "score": 6 }
+          ],
+          "issue_tag": "poor_body_coordination"
+        },
+        "stability": {
+          "weight": 0.15,
+          "metric": "stability_index",
+          "thresholds": [
+            { "max": 0.05, "score": 15 },
+            { "min": 0.05, "max": 0.10, "score": 11 },
+            { "min": 0.10, "score": 6 }
+          ],
+          "issue_tag": "unstable_clear"
+        },
+        "timing": {
+          "weight": 0.05,
+          "metric": "duration",
+          "thresholds": [
+            { "min": 0.25, "max": 0.40, "score": 10 },
+            { "min": 0.20, "max": 0.25, "score": 7 },
+            { "min": 0.40, "max": 0.50, "score": 7 },
+            { "max": 0.20, "score": 4 },
+            { "min": 0.50, "score": 4 }
+          ],
+          "issue_tag": "rushed_clear"
+        }
+      },
+      "suggestions": {
+        "contact_point_low_clear": "Your contact point is too low, making it difficult to clear the shuttle over the net. Try raising your hitting point and focusing on hitting the shuttle higher.",
+        "incomplete_swing_clear": "Your swing is incomplete. Focus on a full backswing and follow-through to ensure you generate sufficient power and control.",
+        "poor_body_coordination": "Your body coordination is lacking. Work on rotating your shoulders and hips to add more power and consistency to your clears.",
+        "unstable_clear": "Your clears are inconsistent. Focus on stabilizing your swing and hit with more consistency by controlling your timing and movement.",
+        "rushed_clear": "You're rushing the shot. Try slowing down the preparation and follow-through to ensure the shot is controlled and accurate."
+      }
+    },
+    "clear": {
+      "total_score": 100,
+      "scoring_rules": {
+        "contact_point_height": {
+          "weight": 0.35,
+          "metric": "contact_ratio",
+          "thresholds": [
+            { "min": 0.50, "score": 35 },
+            { "min": 0.45, "max": 0.50, "score": 28 },
+            { "min": 0.40, "max": 0.45, "score": 20 },
+            { "max": 0.40, "score": 8 }
+          ],
+          "issue_tag": "contact_point_high_clear"
+        },
+        "swing_complete": {
+          "weight": 0.25,
+          "metric": "shoulder_angle_range",
+          "thresholds": [
+            { "min": 90, "score": 25 },
+            { "min": 80, "max": 90, "score": 20 },
+            { "min": 70, "max": 80, "score": 15 },
+            { "max": 70, "score": 10 }
+          ],
+          "issue_tag": "incomplete_swing_clear"
+        },
+        "body_coordination": {
+          "weight": 0.20,
+          "metric": "rotation_angle",
+          "thresholds": [
+            { "min": 45, "score": 20 },
+            { "min": 35, "max": 45, "score": 16 },
+            { "min": 25, "max": 35, "score": 12 },
+            { "max": 25, "score": 6 }
+          ],
+          "issue_tag": "poor_body_coordination"
+        },
+        "stability": {
+          "weight": 0.15,
+          "metric": "stability_index",
+          "thresholds": [
+            { "max": 0.05, "score": 15 },
+            { "min": 0.05, "max": 0.10, "score": 11 },
+            { "min": 0.10, "score": 6 }
+          ],
+          "issue_tag": "unstable_clear"
+        },
+        "timing": {
+          "weight": 0.05,
+          "metric": "duration",
+          "thresholds": [
+            { "min": 0.25, "max": 0.40, "score": 10 },
+            { "min": 0.20, "max": 0.25, "score": 7 },
+            { "min": 0.40, "max": 0.50, "score": 7 },
+            { "max": 0.20, "score": 4 },
+            { "min": 0.50, "score": 4 }
+          ],
+          "issue_tag": "rushed_clear"
+        }
+      },
+      "suggestions": {
+        "contact_point_low_clear": "Your contact point is too low, making it difficult to clear the shuttle over the net. Try raising your hitting point and focusing on hitting the shuttle higher.",
+        "incomplete_swing_clear": "Your swing is incomplete. Focus on a full backswing and follow-through to ensure you generate sufficient power and control.",
+        "poor_body_coordination": "Your body coordination is lacking. Work on rotating your shoulders and hips to add more power and consistency to your clears.",
+        "unstable_clear": "Your clears are inconsistent. Focus on stabilizing your swing and hit with more consistency by controlling your timing and movement.",
+        "rushed_clear": "You're rushing the shot. Try slowing down the preparation and follow-through to ensure the shot is controlled and accurate."
+      }
+    }
+  }
+}

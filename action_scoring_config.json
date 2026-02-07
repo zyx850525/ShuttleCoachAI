@@ -1,0 +1,68 @@
+{
+  "global_metrics": {
+    "contact_height": {
+      "type": "normalized",
+      "formula": "(shoulder_y - wrist_y) / body_height"
+    },
+    "timing": {
+      "type": "delta_frames",
+      "description": "contact_frame - wrist_peak_frame"
+    },
+    "swing_amplitude": {
+      "type": "distance",
+      "points": ["wrist", "shoulder"]
+    },
+    "swing_speed": {
+      "type": "max_velocity",
+      "point": "wrist"
+    },
+    "coordination": {
+      "type": "composite",
+      "components": ["hip_rotation", "shoulder_rotation", "knee_extension"]
+    },
+    "stability": {
+      "type": "variance",
+      "point": "hip_center"
+    },
+    "simplicity": {
+      "type": "path_length",
+      "points": ["wrist", "elbow", "shoulder"]
+    }
+  },
+  "actions": {
+    "smash": {
+      "metrics": {
+        "contact_height": 0.30,
+        "swing_amplitude": 0.25,
+        "coordination": 0.20,
+        "timing": 0.15,
+        "downward_velocity": 0.10
+      }
+    },
+    "clear": {
+      "metrics": {
+        "contact_height": 0.25,
+        "swing_amplitude": 0.25,
+        "direction_stability": 0.20,
+        "stability": 0.20,
+        "timing": 0.10
+      }
+    },
+    "lift": {
+      "metrics": {
+        "contact_height_variance": 0.30,
+        "estimated_shuttle_height": 0.30,
+        "simplicity": 0.20,
+        "stability": 0.20
+      }
+    },
+    "net_shot": {
+      "metrics": {
+        "contact_height": 0.35,
+        "swing_speed_low": 0.25,
+        "simplicity": 0.20,
+        "net_tightness_proxy": 0.20
+      }
+    }
+  }
+}

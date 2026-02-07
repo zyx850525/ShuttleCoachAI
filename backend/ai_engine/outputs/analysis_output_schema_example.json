@@ -1,0 +1,23 @@
+{
+  "action": "lift",
+  "level_assumption": "beginner",
+  "score": 68,
+  "metrics": {
+    "estimated_shuttle_height": 0.52,
+    "simplicity": 0.48,
+    "stability": 0.61
+  },
+  "issues": [
+    {
+      "tag": "low_lift_height",
+      "level": "critical",
+      "coach_tip": "你的挑球高度偏低，容易被对方持续进攻。",
+      "suggestion": "优先保证高度，把球送到对方后场上空。"
+    }
+  ],
+  "positive_feedback": "你的身体控制还不错，只要提高出球高度，挑球会稳定很多。",
+  "next_training_focus": [
+    "中前场被动挑球高度",
+    "缩小挥拍动作"
+  ]
+}

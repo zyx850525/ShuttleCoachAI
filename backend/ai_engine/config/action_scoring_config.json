@@ -1,0 +1,44 @@
+{
+  "smash": {
+    "metrics": {
+      "contact_height": 0.30,
+      "swing_amplitude": 0.25,
+      "coordination": 0.20,
+      "timing": 0.15,
+      "downward_velocity": 0.10
+    }
+  },
+  "clear": {
+    "metrics": {
+      "contact_height": 0.25,
+      "swing_amplitude": 0.25,
+      "direction_stability": 0.20,
+      "stability": 0.20,
+      "timing": 0.10
+    }
+  },
+  "lift": {
+    "metrics": {
+      "contact_height_variance": 0.30,
+      "estimated_shuttle_height": 0.30,
+      "simplicity": 0.20,
+      "stability": 0.20
+    }
+  },
+  "net_shot": {
+    "metrics": {
+      "contact_height": 0.35,
+      "swing_speed_low": 0.25,
+      "simplicity": 0.20,
+      "net_tightness_proxy": 0.20
+    }
+  },
+  "drop": {
+    "metrics": {
+      "contact_height": 0.30,
+      "stability": 0.30,
+      "swing_amplitude": 0.20,
+      "timing": 0.20
+    }
+  }
+}

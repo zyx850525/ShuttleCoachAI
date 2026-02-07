@@ -1,0 +1,82 @@
+{
+  "smash": {
+    "contact_point_low": {
+      "metric": "contact_height",
+      "condition": "< beginner",
+      "priority": 1
+    },
+    "incomplete_swing": {
+      "metric": "swing_amplitude",
+      "condition": "< beginner",
+      "priority": 2
+    },
+    "arm_only_smash": {
+      "metric": "coordination",
+      "condition": "< beginner",
+      "priority": 3
+    }
+  },
+  "lift": {
+    "low_lift_height": {
+      "metric": "estimated_shuttle_height",
+      "condition": "< beginner",
+      "priority": 1
+    },
+    "over_swing_lift": {
+      "metric": "simplicity",
+      "condition": "< beginner",
+      "priority": 2
+    },
+    "unstable_lift_contact": {
+      "metric": "contact_height_variance",
+      "condition": "> beginner",
+      "priority": 3
+    }
+  },
+  "net_shot": {
+    "late_net_contact": {
+      "metric": "contact_height",
+      "condition": "< beginner",
+      "priority": 1
+    },
+    "floating_net_shot": {
+      "metric": "net_tightness_proxy",
+      "condition": "< beginner",
+      "priority": 2
+    }
+  },
+  "drop": {
+    "low_contact_drop": {
+      "metric": "contact_height",
+      "condition": "< beginner",
+      "priority": 1
+    },
+    "poor_deception": {
+      "metric": "swing_amplitude",
+      "condition": "< beginner",
+      "priority": 2
+    },
+    "unstable_drop": {
+      "metric": "stability",
+      "condition": "< beginner",
+      "priority": 3
+    }
+  },
+  "clear": {
+    "low_contact_clear": {
+      "metric": "contact_height",
+      "condition": "< beginner",
+      "priority": 1
+    },
+    "insufficient_swing": {
+      "metric": "swing_amplitude",
+      "condition": "< beginner",
+      "priority": 2
+    },
+    "unstable_clear": {
+      "metric": "stability",
+      "condition": "< beginner",
+      "priority": 3
+    }
+  }
+}
