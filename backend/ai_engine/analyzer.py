@@ -79,7 +79,7 @@ class ActionAnalyzer:
             print(f"Warning: Config file not found at {file_path}")
             return {}
 
-    def analyze(self, action_type: str, metrics: Dict[str, float], level_assumption: str = "beginner", keyframe_base64: Optional[str] = None) -> AnalysisResult:
+    def analyze(self, action_type: str, metrics: Dict[str, float], level_assumption: str = "beginner", keyframe_base64: Optional[str] = None, action_sequence: List[str] = []) -> AnalysisResult:
         if action_type not in self.rules:
             return self._create_empty_result(action_type, level_assumption)
 
@@ -97,7 +97,7 @@ class ActionAnalyzer:
         try:
             from .llm_client import gemini_coach
             if gemini_coach.enabled:
-                llm_result = gemini_coach.generate_feedback(action_type, int(score), metrics, issues, keyframe_base64)
+                llm_result = gemini_coach.generate_feedback(action_type, int(score), metrics, issues, keyframe_base64, action_sequence)
                 if llm_result:
                     positive_feedback = llm_result.get('positive_feedback')
                     next_training_focus = llm_result.get('next_training_focus')

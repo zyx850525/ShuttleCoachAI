@@ -37,7 +37,7 @@ class GeminiCoach:
             except Exception as e:
                 logger.error(f"Failed to initialize Gemini: {e}")
 
-    def generate_feedback(self, action_type: str, score: int, metrics: Dict, issues: List, keyframe_base64: Optional[str]) -> Optional[Dict]:
+    def generate_feedback(self, action_type: str, score: int, metrics: Dict, issues: List, keyframe_base64: Optional[str], action_sequence: List[str] = []) -> Optional[Dict]:
         if not self.enabled:
             return None
 
@@ -55,7 +55,8 @@ class GeminiCoach:
 
             prompt = f"""
             You are a professional Badminton Coach using high-tech analysis.
-            Analyze this student's performance based on the data and the attached keyframe image (hit point).
+            Analyze this student's performance based on the data and the attached action sequence images.
+            The images represent the Preparation, Hit Point, and Follow-through phases.
             
             Action: {action_type}
             Score: {score}/100
@@ -63,7 +64,7 @@ class GeminiCoach:
             Identified Issues: {json.dumps(issues_data, ensure_ascii=False)}
             
             Task:
-            1. Provide "positive_feedback": A brief overall summary (1-2 sentences). Be encouraging but point out the main characteristic.
+            1. Provide "positive_feedback": A brief overall summary (1-2 sentences). Analyze the flow of the action (preparation -> hit -> follow-through).
             2. Provide "next_training_focus": 2 to 3 specific, actionable training drills or focus points.
             
             Output strictly in this JSON structure (do not include markdown code blocks):
@@ -78,14 +79,17 @@ class GeminiCoach:
             
             content = [prompt]
             
-            # 2. Prepare Image
-            if keyframe_base64:
+            # 2. Prepare Images (Sequence preferred, fallback to keyframe)
+            images_to_process = action_sequence if action_sequence else ([keyframe_base64] if keyframe_base64 else [])
+            
+            for b64_img in images_to_process:
+                if not b64_img: continue
                 try:
                     # Remove header if present
-                    if "," in keyframe_base64:
-                        b64_data = keyframe_base64.split(",")[1]
+                    if "," in b64_img:
+                        b64_data = b64_img.split(",")[1]
                     else:
-                        b64_data = keyframe_base64
+                        b64_data = b64_img
                     
                     image_data = base64.b64decode(b64_data)
                     
@@ -96,7 +100,7 @@ class GeminiCoach:
                     }
                     content.append(image_blob)
                 except Exception as img_err:
-                    logger.warning(f"Failed to process keyframe for Gemini: {img_err}")
+                    logger.warning(f"Failed to process image for Gemini: {img_err}")
 
             # 3. Call API
             # generation_config={"response_mime_type": "application/json"} is supported in newer SDKs

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useLanguage } from '../LanguageContext';
 import {
   Chart as ChartJS,
@@ -23,6 +23,7 @@ ChartJS.register(
 
 const AnalysisResult = ({ result, duration }) => {
   const { t, language } = useLanguage();
+  const [zoomedImage, setZoomedImage] = useState(null);
   
   if (!result || !result.result) return null;
   const data = result.result; // The Pydantic model dump
@@ -94,12 +95,46 @@ const AnalysisResult = ({ result, duration }) => {
         <Radar data={chartData} options={chartOptions} />
       </div>
 
-      {/* 2.5 Keyframe Snapshot */}
-      {data.keyframe_base64 && (
+      {/* 2.5 Keyframe Snapshot or Sequence */}
+      {(data.action_sequence && data.action_sequence.length > 0) ? (
+        <div style={styles.section}>
+            <h3 style={{textAlign: 'center'}}>🎞️ {t('key_moment')}</h3>
+            <div style={styles.sequenceContainer}>
+                {data.action_sequence.map((img, idx) => (
+                    <div key={idx} style={styles.sequenceItem}>
+                        <img 
+                            src={img} 
+                            alt={`Sequence ${idx+1}`} 
+                            style={{...styles.keyframeImage, cursor: 'zoom-in'}} 
+                            onClick={() => setZoomedImage(img)}
+                        />
+                        <p style={{textAlign: 'center', fontSize: '12px', color: '#666', marginTop: '4px'}}>
+                            {idx === 0 ? "Prep" : (idx === 1 ? "Hit" : "Finish")}
+                        </p>
+                    </div>
+                ))}
+            </div>
+        </div>
+      ) : (data.keyframe_base64 && (
         <div style={styles.section}>
             <h3 style={{textAlign: 'center'}}>📸 {t('key_moment')}</h3>
             <div style={styles.imageContainer}>
-                <img src={data.keyframe_base64} alt="Key Moment" style={styles.keyframeImage} />
+                <img 
+                    src={data.keyframe_base64} 
+                    alt="Key Moment" 
+                    style={{...styles.keyframeImage, cursor: 'zoom-in'}} 
+                    onClick={() => setZoomedImage(data.keyframe_base64)}
+                />
+            </div>
+        </div>
+      ))}
+
+      {/* Image Modal */}
+      {zoomedImage && (
+        <div style={styles.modalOverlay} onClick={() => setZoomedImage(null)}>
+            <div style={styles.modalContent}>
+                <img src={zoomedImage} alt="Zoomed" style={styles.modalImage} />
+                <button style={styles.closeModalButton} onClick={() => setZoomedImage(null)}>×</button>
             </div>
         </div>
       )}
@@ -266,12 +301,63 @@ const styles = {
     overflow: 'hidden',
     padding: '10px'
   },
+  sequenceContainer: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    gap: '8px',
+    margin: '10px 0',
+    overflowX: 'auto'
+  },
+  sequenceItem: {
+    flex: 1,
+    minWidth: '100px',
+    backgroundColor: '#eee',
+    borderRadius: '8px',
+    padding: '8px',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center'
+  },
   keyframeImage: {
     maxWidth: '100%',
     height: 'auto',
     display: 'block',
     margin: '0 auto',
     borderRadius: '4px'
+  },
+  modalOverlay: {
+    position: 'fixed',
+    top: 0,
+    left: 0,
+    width: '100%',
+    height: '100%',
+    backgroundColor: 'rgba(0, 0, 0, 0.85)',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    zIndex: 2000,
+    cursor: 'zoom-out'
+  },
+  modalContent: {
+    position: 'relative',
+    maxWidth: '90%',
+    maxHeight: '90%'
+  },
+  modalImage: {
+    maxWidth: '100%',
+    maxHeight: '90vh',
+    borderRadius: '4px',
+    boxShadow: '0 4px 12px rgba(0,0,0,0.5)'
+  },
+  closeModalButton: {
+    position: 'absolute',
+    top: '-40px',
+    right: '0',
+    background: 'none',
+    border: 'none',
+    color: 'white',
+    fontSize: '30px',
+    cursor: 'pointer'
   }
 };
 

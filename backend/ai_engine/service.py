@@ -21,6 +21,7 @@ class AIAnalysisService:
             raw_metrics = processing_result["metrics"]
             detected_action = processing_result["detected_action"]
             keyframe = processing_result.get("keyframe")
+            action_sequence = processing_result.get("action_sequence", [])
         except Exception as e:
             # Fallback for error handling
             return {"error": f"Video processing failed: {str(e)}"}
@@ -29,12 +30,14 @@ class AIAnalysisService:
         # Use detected action if no specific action_type is forced
         final_action = action_type if action_type else detected_action
         
-        # Pass keyframe to analyzer for LLM context
-        result = self.analyzer.analyze(final_action, raw_metrics, level_assumption, keyframe)
+        # Pass keyframe and sequence to analyzer for LLM context
+        result = self.analyzer.analyze(final_action, raw_metrics, level_assumption, keyframe, action_sequence)
         
-        # Inject Keyframe
+        # Inject Keyframe & Sequence
         if keyframe:
             result.keyframe_base64 = keyframe
+        if action_sequence:
+            result.action_sequence = action_sequence
         
         # 3. Serialize
         # AnalysisResult is a Pydantic model, use model_dump to return dict

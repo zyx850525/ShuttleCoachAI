@@ -78,10 +78,28 @@ class VideoProcessor:
         peak_idx = hit_window[2]
         keyframe_data = self._generate_keyframe(video_path, peak_idx, landmarks_history[peak_idx])
 
+        # 5. Generate Action Sequence (Prep -> Hit -> Follow-through)
+        start_idx = hit_window[0]
+        end_idx = hit_window[1]
+        
+        # Ensure indices are within bounds and valid
+        prep_idx = max(0, start_idx - 5) # A bit before the hit window starts
+        follow_idx = min(len(landmarks_history)-1, end_idx + 5) # A bit after hit window ends
+        
+        # Extract 3 frames
+        sequence_indices = [prep_idx, peak_idx, follow_idx]
+        action_sequence = []
+        
+        for idx in sequence_indices:
+            frame_img = self._generate_keyframe(video_path, idx, landmarks_history[idx])
+            if frame_img:
+                action_sequence.append(frame_img)
+
         return {
             "detected_action": detected_action,
             "metrics": metrics,
-            "keyframe": keyframe_data
+            "keyframe": keyframe_data,
+            "action_sequence": action_sequence
         }
 
     def _detect_action_type(self, history: List[Dict]) -> str:

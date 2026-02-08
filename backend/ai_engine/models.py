@@ -16,4 +16,5 @@ class AnalysisResult(BaseModel):
     positive_feedback: Dict[str, str]
     next_training_focus: List[Dict[str, str]]
     keyframe_base64: Optional[str] = None
+    action_sequence: List[str] = [] # List of base64 images (Prep -> Hit -> Follow-through)
     generation_source: str = "rules" # "rules" or "gemini"
