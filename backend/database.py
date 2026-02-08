@@ -81,5 +81,24 @@ class Database:
             return result
         return None
 
+    def get_recent_tasks(self, limit: int = 10) -> list:
+        conn = self._get_conn()
+        conn.row_factory = sqlite3.Row
+        cursor = conn.cursor()
+        cursor.execute(
+            "SELECT * FROM analysis_tasks WHERE status = 'completed' ORDER BY created_at DESC LIMIT ?", 
+            (limit,)
+        )
+        rows = cursor.fetchall()
+        conn.close()
+        
+        results = []
+        for row in rows:
+            task = dict(row)
+            if task['result_json']:
+                task['result'] = json.loads(task['result_json'])
+                results.append(task)
+        return results
+
 # Singleton instance
 db = Database()

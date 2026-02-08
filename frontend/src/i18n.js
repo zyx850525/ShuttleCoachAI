@@ -60,6 +60,30 @@ export const translations = {
     "chat_waiting": "教练思考中...",
     "share_result": "生成分享卡片",
     "share_error": "图片生成失败，请重试",
+    "growth_profile": "成长档案",
+    "loading_history": "加载历史记录中...",
+    "no_history": "暂无历史记录",
+    "score_history": "得分趋势",
+    "growth_trend": "成长趋势图",
+    "history_records": "历史记录",
+    
+    // Trivia
+    "did_you_know": "💡 你知道吗？",
+    "trivia_list": [
+        "杀球的最高时速可达 493 km/h，是球速最快的球类运动。",
+        "高远球的核心在于侧身转体，而不仅仅是手臂发力。",
+        "羽毛球上的羽毛通常是 16 根，多取自鹅的左翅。",
+        "放松手腕是打出高质量网前球的关键。",
+        "专业的羽毛球比赛中，选手一场跑动的距离可达 6 公里。",
+        "挑球时，拍面角度决定了球的高度，发力大小决定了球的远度。"
+    ],
+    // Analysis Result
+    "read_more": "查看更多",
+    "show_less": "收起",
+    "scan_to_try": "扫码体验 AI 教练",
+    "prep": "引拍",
+    "hit": "击球",
+    "finish": "随挥",
   },
   en: {
     app_title: "ShuttleCoach AI",
@@ -122,5 +146,29 @@ export const translations = {
     "chat_waiting": "Coach is thinking...",
     "share_result": "Share Result",
     "share_error": "Failed to generate image",
+    "growth_profile": "Growth Profile",
+    "loading_history": "Loading history...",
+    "no_history": "No history records found",
+    "score_history": "Score History",
+    "growth_trend": "Growth Trend",
+    "history_records": "History Records",
+
+    // Trivia
+    "did_you_know": "💡 Did you know?",
+    "trivia_list": [
+        "The fastest smash record is 493 km/h, making it the fastest racket sport.",
+        "The key to a good Clear is body rotation, not just arm strength.",
+        "A shuttlecock has 16 feathers, usually from the left wing of a goose.",
+        "Relaxing your wrist is crucial for high-quality net shots.",
+        "In a pro match, a player can run up to 6 km.",
+        "For Lifts: racket angle controls height, power controls distance."
+    ],
+    // Analysis Result
+    "read_more": "Read More",
+    "show_less": "Show Less",
+    "scan_to_try": "Scan to try AI Coach",
+    "prep": "Prep",
+    "hit": "Hit",
+    "finish": "Finish",
   }
 };

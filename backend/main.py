@@ -114,6 +114,10 @@ async def get_result(task_id: str):
         raise HTTPException(status_code=404, detail="Task not found")
     return task
 
+@app.get("/api/history")
+async def get_history():
+    return db.get_recent_tasks(limit=20)
+
 class ChatRequest(BaseModel):
     task_id: str
     message: str

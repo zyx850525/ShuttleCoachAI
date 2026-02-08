@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react'
 import VideoUpload from './components/VideoUpload'
 import AnalysisResult from './components/AnalysisResult'
+import TriviaCarousel from './components/TriviaCarousel';
+import GrowthProfile from './components/GrowthProfile';
 import { LanguageProvider, useLanguage } from './LanguageContext';
 
 function AppContent() {
@@ -11,6 +13,7 @@ function AppContent() {
   const [analysisStartTime, setAnalysisStartTime] = useState(null);
   const [analysisDuration, setAnalysisDuration] = useState(null);
   const [elapsedTime, setElapsedTime] = useState(0);
+  const [showProfile, setShowProfile] = useState(false);
 
   // URL Persistence Logic
   useEffect(() => {
@@ -148,7 +151,10 @@ function AppContent() {
   return (
     <div className="app-container">
       <header style={styles.header}>
-        <div style={styles.langSwitchContainer}>
+        <div style={styles.topRightControls}>
+          <button onClick={() => setShowProfile(true)} style={styles.iconButton} title={t('growth_profile')}>
+            📈
+          </button>
           <button onClick={toggleLanguage} style={styles.langButton}>
             {language === 'zh' ? 'EN' : '中文'}
           </button>
@@ -156,6 +162,8 @@ function AppContent() {
         <h1>🏸 {t('app_title')}</h1>
         <p>{t('app_subtitle')}</p>
       </header>
+
+      {showProfile && <GrowthProfile onClose={() => setShowProfile(false)} />}
 
       <main style={styles.main}>
         {status === 'idle' && (
@@ -172,6 +180,9 @@ function AppContent() {
                     <h3>{t('analyzing_title')}</h3>
                     <p>{t('elapsed_time')}: {elapsedTime} {t('seconds')}</p>
                     <p>{t('analyzing_wait')}</p>
+                    
+                    {/* Trivia Carousel only during processing */}
+                    {status === 'processing' && <TriviaCarousel />}
                 </>
             )}
           </div>
@@ -196,10 +207,12 @@ const styles = {
     textAlign: 'center',
     position: 'relative'
   },
-  langSwitchContainer: {
+  topRightControls: {
     position: 'absolute',
     top: '20px',
-    right: '20px'
+    right: '20px',
+    display: 'flex',
+    gap: '10px'
   },
   langButton: {
     padding: '5px 10px',
@@ -209,6 +222,18 @@ const styles = {
     border: '1px solid rgba(255,255,255,0.5)',
     borderRadius: '4px',
     cursor: 'pointer'
+  },
+  iconButton: {
+    padding: '5px 10px',
+    fontSize: '16px',
+    backgroundColor: 'rgba(255,255,255,0.2)',
+    color: 'white',
+    border: '1px solid rgba(255,255,255,0.5)',
+    borderRadius: '4px',
+    cursor: 'pointer',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center'
   },
   main: {
     padding: '20px',

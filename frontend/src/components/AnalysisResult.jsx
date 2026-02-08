@@ -153,7 +153,7 @@ const AnalysisResult = ({ result, duration }) => {
                             onClick={() => setZoomedImage(img)}
                         />
                         <p style={{textAlign: 'center', fontSize: '12px', color: '#666', marginTop: '4px'}}>
-                            {idx === 0 ? "Prep" : (idx === 1 ? "Hit" : "Finish")}
+                            {idx === 0 ? t('prep') : (idx === 1 ? t('hit') : t('finish'))}
                         </p>
                     </div>
                 ))}

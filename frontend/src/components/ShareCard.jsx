@@ -49,7 +49,7 @@ const ShareCard = ({ data, cardRef }) => {
         </div>
 
         <div style={styles.footer}>
-          Scan to try AI Coach
+          {t('scan_to_try')}
         </div>
       </div>
     </div>
