@@ -17,9 +17,19 @@ class GeminiCoach:
         self.enabled = False
         self.model = None
         
+        self.proxy = os.getenv("GEMINI_PROXY")
+
         if self.api_key:
             try:
-                genai.configure(api_key=self.api_key)
+                # Configure proxy if available
+                if self.proxy:
+                    os.environ["http_proxy"] = self.proxy
+                    os.environ["https_proxy"] = self.proxy
+                    logger.info(f"Using Gemini Proxy: {self.proxy}")
+
+                # Configure GenAI - prefer REST for better proxy compatibility
+                genai.configure(api_key=self.api_key, transport="rest")
+                
                 # Use gemini-3-flash-preview as requested
                 self.model = genai.GenerativeModel('gemini-3-flash-preview') 
                 self.enabled = True
