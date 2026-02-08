@@ -5,7 +5,7 @@ __pycache__/
 venv/
 .env
 backend/.env
-.to_delete
+.to_delete/
 
 # Node / Frontend
 node_modules/
