@@ -10,7 +10,9 @@ import {
   Legend,
 } from 'chart.js';
 import { Radar } from 'react-chartjs-2';
+import html2canvas from 'html2canvas';
 import AICoachChat from './AICoachChat';
+import ShareCard from './ShareCard';
 
 ChartJS.register(
   RadialLinearScale,
@@ -25,10 +27,32 @@ const AnalysisResult = ({ result, duration }) => {
   const { t, language } = useLanguage();
   const [zoomedImage, setZoomedImage] = useState(null);
   const [isExpanded, setIsExpanded] = useState(false);
+  const cardRef = React.useRef(null);
   
   if (!result || !result.result) return null;
   const data = result.result; // The Pydantic model dump
   const taskId = result.task_id;
+
+  const handleShare = async () => {
+    if (!cardRef.current) return;
+    
+    try {
+        const canvas = await html2canvas(cardRef.current, {
+            scale: 2, // High resolution
+            useCORS: true,
+            backgroundColor: null
+        });
+        
+        const image = canvas.toDataURL("image/png");
+        const link = document.createElement('a');
+        link.href = image;
+        link.download = `ShuttleCoach_${taskId.slice(0,8)}.png`;
+        link.click();
+    } catch (e) {
+        console.error("Share generation failed", e);
+        alert(t('share_error') || "Failed to generate image");
+    }
+  };
 
   // Prepare Radar Chart Data
   const metricLabels = Object.keys(data.metrics).map(k => t(k));
@@ -210,7 +234,17 @@ const AnalysisResult = ({ result, duration }) => {
           ))}
         </div>
       </div>
+
+      {/* Share Button */}
+      <div style={{textAlign: 'center', margin: '40px 0'}}>
+        <button onClick={handleShare} style={styles.shareButton}>
+            📤 {t('share_result')}
+        </button>
+      </div>
       
+      {/* Hidden Share Card */}
+      <ShareCard data={data} cardRef={cardRef} />
+
       {/* AI Coach Chat */}
       <AICoachChat taskId={taskId} result={data} />
     </div>
@@ -393,6 +427,18 @@ const styles = {
     color: 'white',
     fontSize: '30px',
     cursor: 'pointer'
+  },
+  shareButton: {
+    padding: '12px 30px',
+    fontSize: '16px',
+    fontWeight: 'bold',
+    color: 'white',
+    backgroundColor: '#ff9800', // Orange
+    border: 'none',
+    borderRadius: '25px',
+    cursor: 'pointer',
+    boxShadow: '0 4px 6px rgba(0,0,0,0.2)',
+    transition: 'transform 0.1s',
   }
 };
 

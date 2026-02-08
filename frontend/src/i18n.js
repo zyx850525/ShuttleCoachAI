@@ -58,6 +58,8 @@ export const translations = {
     "send_button": "发送",
     "chat_error": "发送失败，请重试。",
     "chat_waiting": "教练思考中...",
+    "share_result": "生成分享卡片",
+    "share_error": "图片生成失败，请重试",
   },
   en: {
     app_title: "ShuttleCoach AI",
@@ -118,5 +120,7 @@ export const translations = {
     "send_button": "Send",
     "chat_error": "Failed to send, please try again.",
     "chat_waiting": "Coach is thinking...",
+    "share_result": "Share Result",
+    "share_error": "Failed to generate image",
   }
 };
