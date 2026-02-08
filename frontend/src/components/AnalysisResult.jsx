@@ -24,6 +24,7 @@ ChartJS.register(
 const AnalysisResult = ({ result, duration }) => {
   const { t, language } = useLanguage();
   const [zoomedImage, setZoomedImage] = useState(null);
+  const [isExpanded, setIsExpanded] = useState(false);
   
   if (!result || !result.result) return null;
   const data = result.result; // The Pydantic model dump
@@ -71,7 +72,26 @@ const AnalysisResult = ({ result, duration }) => {
       {/* 1. Header & Score */}
       <div style={styles.header}>
         <h1>{data.score} {t('score_suffix')}</h1>
-        <p style={styles.feedback}>{data.positive_feedback[language] || data.positive_feedback['zh']}</p>
+        
+        {/* Collapsible Feedback Text */}
+        <div style={styles.feedbackContainer}>
+            <p style={{
+                ...styles.feedback,
+                display: '-webkit-box',
+                WebkitLineClamp: isExpanded ? 'unset' : 3,
+                WebkitBoxOrient: 'vertical',
+                overflow: 'hidden'
+            }}>
+                {data.positive_feedback[language] || data.positive_feedback['zh']}
+            </p>
+            <button 
+                onClick={() => setIsExpanded(!isExpanded)}
+                style={styles.expandButton}
+            >
+                {isExpanded ? (language === 'zh' ? '收起' : 'Show Less') : (language === 'zh' ? '查看更多' : 'Read More')}
+            </button>
+        </div>
+
         <span style={styles.badge}>{t(data.action)} | {t(data.level_assumption)}</span>
         
         {/* AI Badge */}
@@ -212,9 +232,24 @@ const styles = {
     borderRadius: '10px'
   },
   feedback: {
-    fontSize: '1.2em',
+    fontSize: '1.1em',
     color: '#333',
-    margin: '10px 0'
+    margin: '0',
+    lineHeight: '1.5'
+  },
+  feedbackContainer: {
+    margin: '15px 0',
+    textAlign: 'left'
+  },
+  expandButton: {
+    background: 'none',
+    border: 'none',
+    color: '#1976d2',
+    cursor: 'pointer',
+    padding: '5px 0',
+    fontSize: '0.9em',
+    marginTop: '5px',
+    fontWeight: '500'
   },
   badge: {
     display: 'inline-block',

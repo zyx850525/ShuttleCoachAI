@@ -64,14 +64,17 @@ class GeminiCoach:
             Identified Issues: {json.dumps(issues_data, ensure_ascii=False)}
             
             Task:
-            1. Provide "positive_feedback": A brief overall summary (1-2 sentences). Analyze the flow of the action (preparation -> hit -> follow-through).
-            2. Provide "next_training_focus": 2 to 3 specific, actionable training drills or focus points.
+            1. Provide "positive_feedback": A brief overall summary. 
+               - First sentence: Analyze the flow (Prep -> Hit -> Finish).
+               - Second sentence: Compare with a Pro/Standard action (e.g., "Standard action involves X, but your action shows Y").
+            2. Provide "next_training_focus": 2 to 3 specific training points.
+               - For each point, include a "Correction" aspect (Standard vs You).
             
             Output strictly in this JSON structure (do not include markdown code blocks):
             {{
-                "positive_feedback": {{ "zh": "Chinese text", "en": "English text" }},
+                "positive_feedback": {{ "zh": "Chinese text with comparison", "en": "English text with comparison" }},
                 "next_training_focus": [
-                    {{ "zh": "Chinese text", "en": "English text" }},
+                    {{ "zh": "Chinese text (Drill + Comparison)", "en": "English text (Drill + Comparison)" }},
                     ...
                 ]
             }}
