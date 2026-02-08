@@ -70,6 +70,20 @@ const AnalysisResult = ({ result, duration }) => {
         <h1>{data.score} {t('score_suffix')}</h1>
         <p style={styles.feedback}>{data.positive_feedback[language] || data.positive_feedback['zh']}</p>
         <span style={styles.badge}>{t(data.action)} | {t(data.level_assumption)}</span>
+        
+        {/* AI Badge */}
+        {data.generation_source === 'gemini' && (
+            <span style={{
+                ...styles.badge, 
+                backgroundColor: '#7b1fa2', 
+                marginLeft: '8px',
+                backgroundImage: 'linear-gradient(45deg, #7b1fa2, #ab47bc)',
+                boxShadow: '0 2px 4px rgba(0,0,0,0.2)'
+            }}>
+                ⚡ AI Coach
+            </span>
+        )}
+        
         {duration && <p style={styles.duration}>{t('analysis_time')}: {duration} {t('seconds')}</p>}
       </div>
 

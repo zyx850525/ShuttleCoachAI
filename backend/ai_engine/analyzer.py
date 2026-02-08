@@ -1,6 +1,6 @@
 import json
 import os
-from typing import Dict, List, Any
+from typing import Dict, List, Any, Optional
 from .models import AnalysisResult, Issue
 
 class ActionAnalyzer:
@@ -79,7 +79,7 @@ class ActionAnalyzer:
             print(f"Warning: Config file not found at {file_path}")
             return {}
 
-    def analyze(self, action_type: str, metrics: Dict[str, float], level_assumption: str = "beginner") -> AnalysisResult:
+    def analyze(self, action_type: str, metrics: Dict[str, float], level_assumption: str = "beginner", keyframe_base64: Optional[str] = None) -> AnalysisResult:
         if action_type not in self.rules:
             return self._create_empty_result(action_type, level_assumption)
 
@@ -89,29 +89,48 @@ class ActionAnalyzer:
         # 2. Calculate Score
         score = self._calculate_score(action_type, metrics)
 
-        # 3. Generate Feedback (Bilingual)
-        if not issues:
-             positive_feedback = {
-                 "zh": "表现完美！动作非常标准。",
-                 "en": "Perfect performance! Very standard action."
-             }
-        elif score > 75:
-             positive_feedback = {
-                 "zh": "整体动作流畅，核心发力感不错！",
-                 "en": "Overall motion is smooth, good core power usage!"
-             }
-        else:
-             positive_feedback = {
-                 "zh": "基本动作框架已有，细节还需打磨。",
-                 "en": "Basic framework is present, details need refinement."
-             }
+        # 3. Generate Feedback (Try LLM first, fallback to rules)
+        positive_feedback = None
+        next_training_focus = None
+        generation_source = "rules"
+        
+        try:
+            from .llm_client import gemini_coach
+            if gemini_coach.enabled:
+                llm_result = gemini_coach.generate_feedback(action_type, int(score), metrics, issues, keyframe_base64)
+                if llm_result:
+                    positive_feedback = llm_result.get('positive_feedback')
+                    next_training_focus = llm_result.get('next_training_focus')
+                    generation_source = "gemini"
+        except ImportError:
+            pass # LLM client not available or dependency missing
 
-        next_training_focus = [issue.suggestion for issue in issues[:2]]
+        # Fallback Logic (if LLM disabled or failed)
+        if not positive_feedback:
+            generation_source = "rules"
+            if not issues:
+                 positive_feedback = {
+                     "zh": "表现完美！动作非常标准。",
+                     "en": "Perfect performance! Very standard action."
+                 }
+            elif score > 75:
+                 positive_feedback = {
+                     "zh": "整体动作流畅，核心发力感不错！",
+                     "en": "Overall motion is smooth, good core power usage!"
+                 }
+            else:
+                 positive_feedback = {
+                     "zh": "基本动作框架已有，细节还需打磨。",
+                     "en": "Basic framework is present, details need refinement."
+                 }
+
         if not next_training_focus:
-             next_training_focus = [
-                 {"zh": "保持当前状态", "en": "Maintain current form"},
-                 {"zh": "尝试提高动作一致性", "en": "Try to improve consistency"}
-             ]
+            next_training_focus = [issue.suggestion for issue in issues[:2]]
+            if not next_training_focus:
+                 next_training_focus = [
+                     {"zh": "保持当前状态", "en": "Maintain current form"},
+                     {"zh": "尝试提高动作一致性", "en": "Try to improve consistency"}
+                 ]
 
         return AnalysisResult(
             action=action_type,
@@ -120,7 +139,8 @@ class ActionAnalyzer:
             metrics=metrics,
             issues=issues,
             positive_feedback=positive_feedback,
-            next_training_focus=next_training_focus
+            next_training_focus=next_training_focus,
+            generation_source=generation_source
         )
 
     def _identify_issues(self, action: str, metrics: Dict[str, float], level: str) -> List[Issue]:

@@ -29,7 +29,8 @@ class AIAnalysisService:
         # Use detected action if no specific action_type is forced
         final_action = action_type if action_type else detected_action
         
-        result = self.analyzer.analyze(final_action, raw_metrics, level_assumption)
+        # Pass keyframe to analyzer for LLM context
+        result = self.analyzer.analyze(final_action, raw_metrics, level_assumption, keyframe)
         
         # Inject Keyframe
         if keyframe:
