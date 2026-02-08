@@ -84,7 +84,7 @@ const GrowthProfile = ({ onClose }) => {
 
   return (
     <div style={styles.overlay}>
-      <div style={styles.modal}>
+      <div style={styles.modal} className="mobile-full-modal">
         <div style={styles.header}>
           <h2>📈 {t('growth_profile')}</h2>
           <button onClick={onClose} style={styles.closeButton}>×</button>

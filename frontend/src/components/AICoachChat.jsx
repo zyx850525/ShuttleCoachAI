@@ -40,7 +40,8 @@ const AICoachChat = ({ taskId, result }) => {
         body: JSON.stringify({
           task_id: taskId,
           message: userMessage.content,
-          history: history
+          history: history,
+          language: language // Pass current language (zh/en)
         }),
       });
 
@@ -73,6 +74,7 @@ const AICoachChat = ({ taskId, result }) => {
         <button 
           onClick={() => setIsOpen(true)}
           style={styles.floatingButton}
+          className="mobile-chat-btn"
         >
           💬 {t('chat_title')}
         </button>
@@ -80,7 +82,7 @@ const AICoachChat = ({ taskId, result }) => {
 
       {/* Chat Window */}
       {isOpen && (
-        <div style={styles.chatWindow}>
+        <div style={styles.chatWindow} className="mobile-chat-window">
           <div style={styles.chatHeader}>
             <span>🤖 {t('chat_title')}</span>
             <button onClick={() => setIsOpen(false)} style={styles.closeButton}>×</button>

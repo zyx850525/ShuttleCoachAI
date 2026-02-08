@@ -122,6 +122,7 @@ class ChatRequest(BaseModel):
     task_id: str
     message: str
     history: List[Dict[str, str]]
+    language: str = "zh"
 
 @app.post("/api/chat")
 async def chat_with_coach_endpoint(request: ChatRequest):
@@ -137,6 +138,6 @@ async def chat_with_coach_endpoint(request: ChatRequest):
     
     # 2. Call Gemini
     from backend.ai_engine.llm_client import gemini_coach
-    response = gemini_coach.chat_with_coach(analysis_result, request.message, request.history)
+    response = gemini_coach.chat_with_coach(analysis_result, request.message, request.history, request.language)
     
     return {"reply": response}
