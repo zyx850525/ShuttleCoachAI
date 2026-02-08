@@ -50,7 +50,14 @@ export const translations = {
     // Levels
     "beginner": "新手",
     "intermediate": "进阶",
-    "advanced": "高阶"
+    "advanced": "高阶",
+
+    // Chat
+    "chat_title": "AI 教练对话",
+    "chat_placeholder": "询问关于您动作的问题...",
+    "send_button": "发送",
+    "chat_error": "发送失败，请重试。",
+    "chat_waiting": "教练思考中...",
   },
   en: {
     app_title: "ShuttleCoach AI",
@@ -103,6 +110,13 @@ export const translations = {
     // Levels
     "beginner": "Beginner",
     "intermediate": "Intermediate",
-    "advanced": "Advanced"
+    "advanced": "Advanced",
+
+    // Chat
+    "chat_title": "Chat with AI Coach",
+    "chat_placeholder": "Ask about your technique...",
+    "send_button": "Send",
+    "chat_error": "Failed to send, please try again.",
+    "chat_waiting": "Coach is thinking...",
   }
 };

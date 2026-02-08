@@ -6,7 +6,8 @@ import asyncio
 import logging
 from fastapi import FastAPI, UploadFile, File, BackgroundTasks, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
-from typing import Dict
+from typing import Dict, List, Any
+from pydantic import BaseModel
 
 # Import the service from our package
 # Note: When running with uvicorn from root or backend, path resolution might vary.
@@ -112,3 +113,26 @@ async def get_result(task_id: str):
     if not task:
         raise HTTPException(status_code=404, detail="Task not found")
     return task
+
+class ChatRequest(BaseModel):
+    task_id: str
+    message: str
+    history: List[Dict[str, str]]
+
+@app.post("/api/chat")
+async def chat_with_coach_endpoint(request: ChatRequest):
+    # 1. Get analysis result from DB
+    task = db.get_task(request.task_id)
+    if not task:
+        raise HTTPException(status_code=404, detail="Task not found")
+    
+    analysis_result = task.get("result")
+    if not analysis_result:
+         # If no result yet, we can't chat about it.
+         return {"reply": "分析尚未完成，请稍后再试。"}
+    
+    # 2. Call Gemini
+    from backend.ai_engine.llm_client import gemini_coach
+    response = gemini_coach.chat_with_coach(analysis_result, request.message, request.history)
+    
+    return {"reply": response}

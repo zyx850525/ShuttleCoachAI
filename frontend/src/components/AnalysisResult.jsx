@@ -10,6 +10,7 @@ import {
   Legend,
 } from 'chart.js';
 import { Radar } from 'react-chartjs-2';
+import AICoachChat from './AICoachChat';
 
 ChartJS.register(
   RadialLinearScale,
@@ -25,6 +26,7 @@ const AnalysisResult = ({ result, duration }) => {
   
   if (!result || !result.result) return null;
   const data = result.result; // The Pydantic model dump
+  const taskId = result.task_id;
 
   // Prepare Radar Chart Data
   const metricLabels = Object.keys(data.metrics).map(k => t(k));
@@ -153,6 +155,9 @@ const AnalysisResult = ({ result, duration }) => {
           ))}
         </div>
       </div>
+      
+      {/* AI Coach Chat */}
+      <AICoachChat taskId={taskId} result={data} />
     </div>
   );
 };
