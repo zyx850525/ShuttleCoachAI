@@ -8,7 +8,7 @@
 [![React](https://img.shields.io/badge/Frontend-React-61DAFB)](https://reactjs.org/)
 [![FastAPI](https://img.shields.io/badge/Backend-FastAPI-009688)](https://fastapi.tiangolo.com/)
 
-[中文文档](./README_zh.md) | [Live Demo](#)
+[中文文档](./README_zh.md) | [Live Demo](https://youtu.be/RRDhoylC7d4)
 
 ---
 
@@ -126,6 +126,16 @@ Chat with your personal AI coach to get deeper insights and personalized trainin
 ### 6. Growth Profile
 Track your performance history and visualize your progress over time.
 ![Growth Profile](./screenshots/profile.png)
+
+### 7. Social Share Card
+Generate a high-resolution analysis summary card to share with friends or on social media.
+![Share Card](./screenshots/share_card.png)
+
+## 🗺️ Roadmap (Future Enhancements)
+*   **3D Action Reconstruction**: Move beyond 2D keypoints to full 3D skeletal trajectory analysis for higher precision.
+*   **Perspective-Aware Scoring**: Implement specific classifiers to adjust scoring weights based on camera angles (e.g., side view for swing amplitude vs. rear view for direction).
+*   **Full-Match Tactical Analysis**: Evolve from single-action analysis to whole-match tracking of footwork and tactical execution.
+*   **Social & Community**: Build a leaderboard and challenge system to foster engagement within the global badminton community.
 
 ## 🤝 Contributing
 

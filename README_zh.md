@@ -8,7 +8,7 @@
 [![React](https://img.shields.io/badge/Frontend-React-61DAFB)](https://reactjs.org/)
 [![FastAPI](https://img.shields.io/badge/Backend-FastAPI-009688)](https://fastapi.tiangolo.com/)
 
-[English Docs](./README.md) | [在线演示](#)
+[English Docs](./README.md) | [在线演示](https://youtu.be/RRDhoylC7d4)
 
 ---
 
@@ -134,6 +134,12 @@ AI 引擎（MediaPipe + Gemini 3）实时提取动作链关键指标。
 ## 🤝 贡献指南
 
 欢迎提交 Issue 和 Pull Request！
+
+## 🗺️ 后续优化方向
+*   **3D 动作重构**：从 2D 骨骼关键点进化到 3D 骨骼轨迹分析，提供更高维度的动作理解。
+*   **多视角权重优化**：针对不同拍摄视角（侧位、后位）建立特定的评分权重体系。
+*   **实战全程分析**：从分析单一动作进化到对整场比赛的跑位协调性及战术执行力进行评估。
+*   **社交激励体系**：引入社区排名与好友对战，增加产品在羽毛球圈内的社交粘度。
 
 ## 📄 开源协议
 
